@@ -298,7 +298,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[OpenId](
-	[openId_url] [nvarchar](256) NOT NULL,
+	[openId_url] [nvarchar](256) COLLATE SQL_Latin1_General_CP1_CS_AS NOT NULL,
 	[user_id] [uniqueidentifier] NOT NULL,
  CONSTRAINT [PK_OpenId] PRIMARY KEY CLUSTERED 
 (
