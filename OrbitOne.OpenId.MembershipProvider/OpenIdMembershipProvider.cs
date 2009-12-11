@@ -19,7 +19,7 @@ namespace OrbitOne.OpenId.MembershipProvider
     {
         #region Members
 
-        private static readonly OpenIdRelyingParty consumer = new OpenIdRelyingParty();
+        private readonly OpenIdRelyingParty consumer = new OpenIdRelyingParty();
         
         private static readonly string EXCEPTION_MESSAGE = "An exception occurred. Please check the Event Log.";
         private string _connectionString;

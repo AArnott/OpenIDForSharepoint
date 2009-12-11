@@ -6,15 +6,12 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using OrbitOne.OpenId.MembershipProvider;
 
-
-
 namespace OrbitOne.OpenId.Controls
 {
     [DefaultProperty("Text"), ToolboxData("<{0}:OpenIDLogin runat=server></{0}:OpenIDLogin>")]
     public class OpenIdLogin : Login
     {
         private string _linkOpenIdPage;
-
 
         #region Properties
         [Localizable(true), Bindable(true), Category("Appearance"), DefaultValue("")]
@@ -157,11 +154,13 @@ namespace OrbitOne.OpenId.Controls
             {
             }
         }
+
         protected override void RenderContents(HtmlTextWriter output)
         {
             HidePasswordControl();
             base.RenderContents(output);
         }
+
         private void HidePasswordControl()
         {
             TextBox box = (TextBox)base.FindControl("Password");
@@ -176,9 +175,5 @@ namespace OrbitOne.OpenId.Controls
             }
         }
         #endregion Methods
-        
-
     }
-
-
 }

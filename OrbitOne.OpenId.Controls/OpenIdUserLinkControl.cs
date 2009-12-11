@@ -8,33 +8,21 @@ namespace OrbitOne.OpenId.Controls
     public  class OpenIdUserLinkControl : System.Web.UI.UserControl
     {
         private static readonly string HEADTEXT =
-            "The OpenId: <b>{0}</b> you are trying to login with is not linked with any site user, please link this OpenId with your site user account:";
-
-        private Identifier _openId;
-        private string _openIdmembershipProvider;
-
+            "The OpenID: <b>{0}</b> you are trying to login with is not linked with any site user, please link this OpenID with your site user account:";
 
         protected Login LinkOpenIdLogin;
         protected Label headLabel;
-        
-        public Identifier OpenId
-        {
-            get { return _openId; }
-            set { _openId = value; }
-        }
+
+        public Identifier OpenId { get; set; }
+
         [System.ComponentModel.Browsable(true),
              System.ComponentModel.Description("OpenId MembershipProvider name")]
-        public string OpenIdMembershipProvider
-        {
-            get { return _openIdmembershipProvider; }
-            set { _openIdmembershipProvider = value; }
-        }
+        public string OpenIdMembershipProvider { get; set; }
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            OpenId = GetOpenIdFromQueryString();
+            OpenId = Page.Request.QueryString["openId"];
             headLabel.Text = string.Format(HEADTEXT, OpenId);
-
         }
 
         protected void LinkOpenIdLogin_LoggedIn(object sender, EventArgs e)
@@ -43,17 +31,6 @@ namespace OrbitOne.OpenId.Controls
             MembershipUser user = Membership.Providers[LinkOpenIdLogin.MembershipProvider].GetUser(LinkOpenIdLogin.UserName, false);
             provider.LinkUserWithOpenId(OpenId, user.ProviderUserKey);
             FormsAuthentication.RedirectFromLoginPage(user.UserName, false);
-
         }
-
-
-
-        private string GetOpenIdFromQueryString()
-        {
-            return Server.UrlDecode(Page.Request.QueryString["openId"]);
-        }
-
-
-
     }
 }
