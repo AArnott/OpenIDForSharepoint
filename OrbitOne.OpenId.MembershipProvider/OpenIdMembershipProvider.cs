@@ -391,7 +391,7 @@ namespace OrbitOne.OpenId.MembershipProvider
             SqlConnection conn = new SqlConnection(_connectionString);
             SqlCommand cmd = new SqlCommand("OpenId_GetUserIdByOpenId", conn);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Add("@OpenId_Url", SqlDbType.NVarChar).Value = openId;
+            cmd.Parameters.Add("@ClaimedIdentifier", SqlDbType.NVarChar).Value = openId;
             SqlDataReader reader = null;
             try
             {
@@ -461,12 +461,12 @@ namespace OrbitOne.OpenId.MembershipProvider
 
             return users;
         }
-        public void LinkUserWithOpenId(string openId, object userId)
+        public void LinkUserWithOpenId(Identifier claimedIdentifier, object userId)
         {
             SqlConnection conn = new SqlConnection(_connectionString);
             SqlCommand cmd = new SqlCommand("OpenId_LinkUserWithOpenId", conn);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Add("@OpenId_Url", SqlDbType.NVarChar).Value = openId;
+            cmd.Parameters.Add("@ClaimedIdentifier", SqlDbType.NVarChar).Value = claimedIdentifier;
             cmd.Parameters.Add("@userId", SqlDbType.NVarChar).Value = userId.ToString();
             try
             {
@@ -488,13 +488,13 @@ namespace OrbitOne.OpenId.MembershipProvider
                 conn.Close();
             }
         }
-        public void RemoveUserOpenIdLinkByOpenId(string openId)
+        public void RemoveUserOpenIdLinkByOpenId(Identifier claimedIdentifier)
         {
 
             SqlConnection conn = new SqlConnection(_connectionString);
             SqlCommand cmd = new SqlCommand("OpenId_DeleteUserOpenIdLink", conn);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Add("@OpenId_Url", SqlDbType.NVarChar).Value = openId;
+            cmd.Parameters.Add("@ClaimedIdentifier", SqlDbType.NVarChar).Value = claimedIdentifier;
             cmd.Parameters.Add("@userId", SqlDbType.UniqueIdentifier).Value = DBNull.Value;
             try
             {
@@ -522,7 +522,7 @@ namespace OrbitOne.OpenId.MembershipProvider
             SqlConnection conn = new SqlConnection(_connectionString);
             SqlCommand cmd = new SqlCommand("OpenId_DeleteUserOpenIdLink", conn);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Add("@OpenId_Url", SqlDbType.NVarChar).Value = DBNull.Value;
+            cmd.Parameters.Add("@ClaimedIdentifier", SqlDbType.NVarChar).Value = DBNull.Value;
             cmd.Parameters.Add("@userId", SqlDbType.NVarChar).Value = userId.ToString();
             try
             {

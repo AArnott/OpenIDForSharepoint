@@ -298,11 +298,11 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[OpenId](
-	[openId_url] [nvarchar](256) NOT NULL,
+	[ClaimedIdentifier] [nvarchar](256) COLLATE SQL_Latin1_General_CP1_CS_AS NOT NULL,
 	[user_id] [uniqueidentifier] NOT NULL,
  CONSTRAINT [PK_OpenId] PRIMARY KEY CLUSTERED 
 (
-	[openId_url] ASC
+	[ClaimedIdentifier] ASC
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
@@ -3749,7 +3749,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE PROCEDURE [dbo].[OpenId_DeleteUserOpenIdLink]
-@openId_Url nvarchar(256)=NULL, 
+@claimedIdentifier nvarchar(256)=NULL, 
 @userId uniqueidentifier=NULL 
 
 AS
@@ -3759,7 +3759,7 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	delete from dbo.OpenId where (openId_url=@openId_Url) 
+	delete from dbo.OpenId where ([ClaimedIdentifier]=@claimedIdentifier) 
 or ([user_id]=@userId)
 END
 
@@ -3780,7 +3780,7 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	select [openId_url] from dbo.OpenId where ([user_id]=@userId)
+	select [ClaimedIdentifier] from dbo.OpenId where ([user_id]=@userId)
 END
 
 
@@ -3790,13 +3790,13 @@ GO
 SET QUOTED_IDENTIFIER OFF
 GO
 CREATE PROCEDURE [dbo].[OpenId_GetUserIdByOpenId]
-    @OpenId_Url                                nvarchar(256)
+    @ClaimedIdentifier                                nvarchar(256)
 AS
 BEGIN
     
     SELECT  o.[user_id]
     FROM    dbo.OpenId o
-    WHERE   LOWER(o.openId_url) = LOWER(@OpenId_Url)   
+    WHERE   o.ClaimedIdentifier = @ClaimedIdentifier
 END
 
 
@@ -3807,7 +3807,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE PROCEDURE [dbo].[OpenId_LinkUserWithOpenId]
-@openId_Url nvarchar(256), 
+@ClaimedIdentifier nvarchar(256),
 @userId uniqueidentifier
 
 AS
@@ -3817,7 +3817,7 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	insert into dbo.OpenId (openId_url,[user_id]) values(@openId_Url, @userId)
+	insert into dbo.OpenId (ClaimedIdentifier,[user_id]) values(@ClaimedIdentifier, @userId)
 END
 
 
@@ -3844,7 +3844,7 @@ BEGIN
 
     SELECT @TotalRecords = @@ROWCOUNT
 
-    SELECT u.UserName,o.openId_url, m.Email, m.PasswordQuestion, m.Comment, m.IsApproved,
+    SELECT u.UserName,o.ClaimedIdentifier, m.Email, m.PasswordQuestion, m.Comment, m.IsApproved,
             m.CreateDate,
             m.LastLoginDate,
             u.LastActivityDate,
