@@ -1,0 +1,88 @@
+<%@ Master Language="C#" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" >
+<head runat="server">
+    <title>Orbit One OpenID Test Site </title>   
+    
+    <meta name="copyright" 
+    content=
+    "License  (New BSD License)Copyright (c) 2007, StrongEye Solutions LLC
+
+All rights reserved.
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution. Neither the name StrongEye Solutions nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+'AS IS' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+    " />   
+    
+    <link href="OpenID.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div id="header">
+            <div id="title" style="left: 0px; top: 0px">
+                <h1>		
+			<asp:HyperLink ID="HyperLink1" NavigateUrl="~/OpenId/Pages/About.aspx" runat="server">Orbit One</asp:HyperLink>
+                    <br />
+                    &nbsp; &nbsp;
+                    <asp:HyperLink ID="HyperLink2" runat="server" NavigateUrl="~/OpenId/Pages/About.aspx">OpenID Test Project</asp:HyperLink>&nbsp;</h1>
+                <br />
+            </div>
+            <div id="login">
+                <asp:LoginName ID="LoginName" runat="server" />
+                <br />
+                <asp:LoginStatus ID="LoginStatus1" runat="server" LogoutPageUrl="~/OpenId/Pages/About.aspx" />
+                <!--
+                |
+                  <a href="#">Help</a>
+                  --></div>
+        </div>
+        <div class="none">
+            <a href="#content_start">Skip Repetitive Navigational Links</a></div>
+        <div id="navtop">
+            <asp:SiteMapDataSource ID="SiteMapDataSource1" runat="server" ShowStartingNode="false" />
+            <asp:Menu ID="MainMenu" runat="server" Orientation="Horizontal" MaximumDynamicDisplayLevels="2"
+                DataSourceID="SiteMapDataSource1" DynamicEnableDefaultPopOutImage="False" StaticEnableDefaultPopOutImage="False">
+                <StaticMenuStyle CssClass="menu" />
+                <StaticMenuItemStyle CssClass="menuItem" />
+                <StaticSelectedStyle CssClass="menuSelectedItem" />
+                <DynamicMenuStyle CssClass="menuPopup" />
+                <DynamicMenuItemStyle CssClass="menuPopupItem" Font-Strikeout="False" />
+                <DynamicHoverStyle CssClass="menuPopupItem" />
+                <StaticHoverStyle CssClass="menuItemHover" />
+            </asp:Menu>
+        </div>
+        <div id=breadcrumb style="height: 1px">
+            <asp:SiteMapPath ID="SiteMapPath1" runat="server" PathSeparator=" | ">
+                <RootNodeStyle Font-Bold="True" />
+            </asp:SiteMapPath>
+        
+        </div>
+        <div id="subnav">
+            <!-- sub navigation items can go in this div here -->
+        </div>
+        <div id="body">
+            <a name="content_start" id="content_start"></a>&nbsp;</div>
+        <br />
+        &nbsp;<div style="text-align: center">
+            <table style="width: 792px">
+                <tr>
+                    <td style="width: 883px">
+            <asp:ContentPlaceHolder ID="maincontent" runat="server">
+            </asp:ContentPlaceHolder>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </form>
+</body>
+</html>

@@ -1,0 +1,419 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" >
+<head>
+    <title>Open Id Starter Kit</title>
+</head>
+<body style="background-color: #ffffff">
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-align: justify">
+        <strong><span style="font-size: 18pt">Open Id Starter Kit&nbsp;</span></strong>
+        <?xml namespace="" ns="urn:schemas-microsoft-com:office:office" prefix="o" ?><o:p></o:p></p>
+    <p style="text-align: justify">
+            Welcome to your new <strong>Open Id Membership Provider </strong>sample application. The key
+            features include the following:         <o:p></o:p></p>
+    <ul type="disc">
+        <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+            mso-list: l9 level1 lfo1; tab-stops: list 36.0pt; text-align: justify;"><strong>Login.</strong> Identify
+            a user with one of two kinds of accounts. 
+		<ul type="disc">
+			<li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+            mso-list: l9 level1 lfo1; tab-stops: list 36.0pt; text-align: justify;">The first 
+			user account uses the traditional ASP.NET Membership Provider.</li>
+			<li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+            mso-list: l9 level1 lfo1; tab-stops: list 36.0pt; text-align: justify;">&nbsp;The 
+			second one uses the StrongEye Solutions OpenID Membership Provider.</li>
+		</ul>
+        </li>
+        <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+            mso-list: l9 level1 lfo1; tab-stops: list 36.0pt; text-align: justify;"><strong>Create User</strong>.
+            Creates a new user account. 
+            <o:p></o:p></li>
+        <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+            mso-list: l9 level1 lfo1; tab-stops: list 36.0pt; text-align: justify;"><strong>Specific User. </strong>
+		Manage account information for one specific user. 
+            <o:p></o:p></li>
+        <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+            mso-list: l9 level1 lfo1; tab-stops: list 36.0pt; text-align: justify;"><strong>All Users.</strong> Displays
+            all user accounts and their specific information. 
+            <o:p></o:p></li>
+        <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+            mso-list: l9 level1 lfo1; tab-stops: list 36.0pt; text-align: justify;"><strong>Permissions and Roles.</strong>
+            Assigns permissions and roles to an user account. 
+            <o:p></o:p></li>
+    </ul>
+    <p style="text-align: justify">
+        This site is ready to run! No changes are needed*. Press CTRL+F5 to run the site.
+    </p>
+    <blockquote>
+        <span style="font-size: 10pt">* Requires ASP.NET 2.0 and <a href="http://go.microsoft.com/fwlink/?LinkId=49251">
+            SQL Server 2005 Express</a> edition to run as-is. Under App_Data you will find a
+            .sql script you can use to create the OpenID Membership database in your own data
+            environment. After you have run the script, update your connection string in web.config.</span></blockquote>
+    <div align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt; text-align: center">
+        <hr align="center" size="2" width="100%" />
+    </div>
+    <h2 style="margin: auto 0cm; text-align: justify;">
+        <span style="background-position: 0% 0%; background-attachment: scroll;">About The OpenID Membership Provider</span>
+        <o:p></o:p></h2>
+    <p style="text-align: justify">
+        <span style="background-position: 0% 0%; background-attachment: scroll;">
+        The OpenID Membership Provider comes from the open source library 
+		maintained by
+		<a href="http://www.strongeye.com/">StrongEye Solutions LLC</a>. The project is licensed using the New BSD License  </span><o:p>(see <a href="#License">license</a> at the end of this page). You are 
+encouraged to contribute to this project or download the most up-to-date version 
+of the source code from the <a href="http://code.google.com/p/dotnet-membership-provider/">project home page on Google 
+Code</a>.</o:p></p>
+<p style="text-align: justify">
+        <o:p>Using 
+the ASP.NET Membership Provider model, the OpenID Membership Provider allows you 
+to leverage declarative authorization and to interoperate with other ASP.NET 
+providers (such as Roles Providers) using OpenID authentication.</o:p></p>
+	<p style="text-align: justify">
+        <o:p>To learn more about OpenID, visit <a href="http://openid.net/">OpenID.net</a>. 
+OpenID authentication is made possible through third party Identity Providers. 
+You may implement your own Identity Provider (in fact, you may do so easily by 
+using the excellent <a href="http://code.google.com/p/dotnetopenid/">C# port of the JanRain OpenID library</a> 
+that we also use), however that is outside the scope of this Starter Kit. This 
+Starter Kit assumes your users will make use of existing OpenID Identity 
+Providers (IDPs). Third party Identity Providers are easily found on the Web, 
+and many are free. Our favorite IDP is <a href="http://linksafe.name/">Linksafe</a>. Linksafe uses <a href="http://en.wikipedia.org/wiki/I-name">i-names</a>, which we think are the most 
+human-friendly identifiers available, but any OpenID provider will work, and and 
+there are <a href="http://openiddirectory.com/openid-providers-c-1.html">many to choose from</a>. </o:p></p>
+
+
+    <div align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt; text-align: center">
+        <hr align="center" size="2" width="100%" />
+    </div>
+    <h2 style="margin: auto 0cm; text-align: justify;">
+        <span style="background-position: 0% 0%; background-attachment: scroll;">Site Members and Roles </span>
+        <o:p></o:p></h2>
+    <p style="text-align: justify">
+        <span style="background-position: 0% 0%; background-attachment: scroll;">
+        Your Starter Kit Web site allows visitors to register as members and then log in.
+        Members have specific privileges defined by roles such as administrator or guest.
+        Each Starter Kit Web site defines site-specific roles. The following table describes
+        what features are available to visitors in different roles.</span><o:p></o:p></p>
+    <p>
+    <table border="0" cellpadding="0" class="MsoNormalTable" style="mso-cellspacing: 1.5pt; mso-padding-alt: 0cm 0cm 0cm 0cm">
+        <tr style="mso-yfti-irow: 0; mso-yfti-firstrow: yes">
+            <td style="border-right: #d4d0c8; padding-right: 0.75pt; border-top: #d4d0c8; padding-left: 0.75pt;
+                padding-bottom: 0.75pt; border-left: #d4d0c8; padding-top: 0.75pt; border-bottom: #d4d0c8;
+                background-color: transparent">
+                <p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-align: justify">
+                    <b>
+                Visitor<xml>
+                        <o:p></o:p>
+                    </xml></b><o:p></o:p></p>
+            </td>
+            <td style="border-right: #d4d0c8; padding-right: 0.75pt; border-top: #d4d0c8; padding-left: 0.75pt;
+                padding-bottom: 0.75pt; border-left: #d4d0c8; padding-top: 0.75pt; border-bottom: #d4d0c8;
+                background-color: transparent">
+                <p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-align: justify">
+                    <b>
+                Privileges<o:p></o:p></b><o:p></o:p></p>
+            </td>
+        </tr>
+        <tr style="mso-yfti-irow: 1">
+            <td style="border-right: #d4d0c8; padding-right: 0.75pt; border-top: #d4d0c8; padding-left: 0.75pt;
+                padding-bottom: 0.75pt; border-left: #d4d0c8; padding-top: 0.75pt; border-bottom: #d4d0c8;
+                background-color: transparent">
+                <p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-align: justify;">
+                Not logged in<o:p></o:p></p>
+            </td>
+            <td style="border-right: #d4d0c8; padding-right: 0.75pt; border-top: #d4d0c8; padding-left: 0.75pt;
+                padding-bottom: 0.75pt; border-left: #d4d0c8; padding-top: 0.75pt; border-bottom: #d4d0c8;
+                background-color: transparent">
+                <p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-align: justify;">
+                    No privileges.<o:p></o:p></p>
+            </td>
+        </tr>
+        <tr style="mso-yfti-irow: 2">
+            <td style="border-right: #d4d0c8; padding-right: 0.75pt; border-top: #d4d0c8; padding-left: 0.75pt;
+                padding-bottom: 0.75pt; border-left: #d4d0c8; padding-top: 0.75pt; border-bottom: #d4d0c8;
+                background-color: transparent">
+                <p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-align: justify;">
+                    Logged in<o:p></o:p></p>
+            </td>
+            <td style="border-right: #d4d0c8; padding-right: 0.75pt; border-top: #d4d0c8; padding-left: 0.75pt;
+                padding-bottom: 0.75pt; border-left: #d4d0c8; padding-top: 0.75pt; border-bottom: #d4d0c8;
+                background-color: transparent">
+                <p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-align: justify;">
+                No privileges. All members must be associated at least with the role <strong>SiteRole1</strong>.<o:p></o:p></p>
+            </td>
+        </tr>
+        <tr style="mso-yfti-irow: 3">
+            <td style="border-right: #d4d0c8; padding-right: 0.75pt; border-top: #d4d0c8; padding-left: 0.75pt;
+                padding-bottom: 0.75pt; border-left: #d4d0c8; padding-top: 0.75pt; border-bottom: #d4d0c8;
+                background-color: transparent">
+                <p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-align: justify;">
+                    Logged in as
+                    <br />
+                    <strong>SiteRole1</strong></p>
+            </td>
+            <td style="border-right: #d4d0c8; padding-right: 0.75pt; border-top: #d4d0c8; padding-left: 0.75pt;
+                padding-bottom: 0.75pt; border-left: #d4d0c8; padding-top: 0.75pt; border-bottom: #d4d0c8;
+                background-color: transparent">
+                <p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-align: justify;">
+                    May view but not edit.</p>
+            </td>
+        </tr>
+        <tr style="mso-yfti-irow: 4; mso-yfti-lastrow: yes">
+            <td style="border-right: #d4d0c8; padding-right: 0.75pt; border-top: #d4d0c8; padding-left: 0.75pt;
+                padding-bottom: 0.75pt; border-left: #d4d0c8; padding-top: 0.75pt; border-bottom: #d4d0c8;
+                background-color: transparent">
+                <p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-align: justify;">
+                    Logged in as<br />
+                    <strong>Project Administrator</strong><o:p></o:p></p>
+            </td>
+            <td style="border-right: #d4d0c8; padding-right: 0.75pt; border-top: #d4d0c8; padding-left: 0.75pt;
+                padding-bottom: 0.75pt; border-left: #d4d0c8; padding-top: 0.75pt; border-bottom: #d4d0c8;
+                background-color: transparent">
+                <p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-align: justify;">
+                May additionally view the list of all users and assign user to roles. The starterkit
+                    provides an Administrator user account.&nbsp;</p>
+                <p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-align: justify">
+                    &nbsp;</p>
+                <p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-align: justify">
+                    User name: Administrator</p>
+                <p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-align: justify">
+                    Password:&nbsp; @Dmns12345&nbsp;<o:p></o:p></p>
+            </td>
+        </tr>
+    </table>
+    </p>
+    <p class="warning" style="margin: auto 0cm; text-align: justify;">
+        <span style="background-position: 0% 0%; background-attachment: scroll;">
+        Important: Run the site before proceeding to automatically generate the site's predefined
+        roles.</span><o:p></o:p></p>
+    <p style="text-align: justify">
+        <span style="background-position: 0% 0%; background-attachment: scroll;">
+        Be sure to create a user name for yourself and assign yourself to a role (such as
+        administrator) that can manage the site.</span><o:p></o:p></p>
+    <p style="text-align: justify">
+        <span style="background-position: 0% 0%; background-attachment: scroll;">
+        Visitors can register by clicking the <strong>Create new
+            </strong>user link on the
+        home page. New members are activated automatically, and are assigned to a role as
+        specified in the Web.config file. </span>
+        <o:p></o:p></p>
+    <div align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt; text-align: center">
+        <hr align="center" size="2" width="100%" />
+    </div>
+    <h2 style="margin: auto 0cm; text-align: justify;">
+        Users Accounts<o:p></o:p></h2>
+    <p style="text-align: justify">
+        <strong>To log in with a membership user account&nbsp;</strong><o:p></o:p></p>
+    <ol start="1" type="1">
+        <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+            mso-list: l3 level1 lfo2; tab-stops: list 36.0pt; text-align: justify;">Click the <strong>Login</strong>
+            tab 
+            <o:p></o:p></li>
+        <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+            mso-list: l3 level1 lfo2; tab-stops: list 36.0pt; text-align: justify;">Specify a user name and password
+            in the <strong>Membership User Login</strong> area 
+            <o:p></o:p></li>
+        <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+            mso-list: l3 level1 lfo2; tab-stops: list 36.0pt; text-align: justify;">Click <strong>Login</strong>.
+            The welcome page is displayed. But if you tried to open and locked page and you
+            log in successfully the Web site will open this page
+            <o:p></o:p></li>
+    </ol>
+    <p style="text-align: justify">
+        <strong>To log in with an OpenId user account&nbsp;</strong><o:p></o:p></p>
+    <ol start="1" type="1">
+        <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+            mso-list: l7 level1 lfo3; tab-stops: list 36.0pt; text-align: justify;">Click the <strong>Login</strong>
+            tab 
+            <o:p></o:p></li>
+        <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+            mso-list: l7 level1 lfo3; tab-stops: list 36.0pt; text-align: justify;">Specify OpenId URL in the <strong>
+                OpenID User Login </strong>area&nbsp; 
+            <o:p></o:p></li>
+        <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+            mso-list: l7 level1 lfo3; tab-stops: list 36.0pt; text-align: justify;">The Web site will open your OpenId
+            provider page, you must to identify there 
+            <o:p></o:p></li>
+        <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+            mso-list: l7 level1 lfo3; tab-stops: list 36.0pt; text-align: justify;"><strong>Allow</strong> this Web
+            site in your OpenId account&nbsp; 
+            <o:p></o:p></li>
+        <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+            mso-list: l7 level1 lfo3; tab-stops: list 36.0pt; text-align: justify;">Click <strong>Login</strong>.
+            The welcome page is displayed. But if you tried to open and locked page and you
+            log in successfully the Web site will open this page
+            <o:p></o:p></li>
+    </ol>
+    <p style="text-align: justify">
+        <strong>To add a membership user account</strong><o:p></o:p></p>
+    <ol start="1" type="1">
+        <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+            mso-list: l4 level1 lfo4; tab-stops: list 36.0pt; text-align: justify;">Click the <strong>Create Users </strong>
+            tab 
+            <o:p></o:p></li>
+        <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+            mso-list: l4 level1 lfo4; tab-stops: list 36.0pt; text-align: justify;">Specify a user name, password,
+            confirm password and email 
+            <o:p></o:p></li>
+        <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+            mso-list: l4 level1 lfo4; tab-stops: list 36.0pt; text-align: justify;">Click <strong>Create User</strong>.
+            The new membership user is Log In automatically 
+            <o:p></o:p></li>
+    </ol>
+    <p style="text-align: justify">
+        <strong>To add a role</strong><o:p></o:p></p>
+    <ol start="1" type="1">
+        <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+            mso-list: l2 level1 lfo5; tab-stops: list 36.0pt; text-align: justify;">Log in to the site with a <strong>
+                Membership</strong> or <strong>OpenId</strong> user 
+            <o:p></o:p></li>
+        <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+            mso-list: l2 level1 lfo5; tab-stops: list 36.0pt; text-align: justify;">Click the <strong>Permissions </strong>tab 
+            <o:p></o:p></li>
+        <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+            mso-list: l2 level1 lfo5; tab-stops: list 36.0pt; text-align: justify;">Specify a role name 
+            <o:p></o:p></li>
+        <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+            mso-list: l2 level1 lfo5; tab-stops: list 36.0pt; text-align: justify;">Click <strong>Add </strong>in
+            the <strong>Roles</strong> area 
+            <o:p></o:p></li>
+    </ol>
+    <p style="text-align: justify">
+        <strong>To add roles to an user account</strong><o:p></o:p></p><ol start="1" type="1">
+            <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+            mso-list: l1 level1 lfo6; tab-stops: list 36.0pt; text-align: justify;">Log in to the site with an <strong>
+                    Administrator</strong> user
+                <o:p></o:p></li>
+            <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+                mso-list: l1 level1 lfo6; tab-stops: list 36.0pt; text-align: justify;">Click the <strong>
+                    Permissions </strong>tab 
+                <o:p></o:p></li>
+            <li style="margin: 0cm 0cm 0pt; text-align: justify; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-list: l1 level1 lfo6; tab-stops: list 36.0pt" class="MsoNormal">Select the <strong>User Name</strong> in the <strong>User Roles </strong>area
+                <o:p></o:p></li>
+            <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+            mso-list: l1 level1 lfo6; tab-stops: list 36.0pt; text-align: justify;">Click the<strong> Add to Role</strong>
+                button next to the role name wishes in the <strong>Roles</strong> area 
+                <o:p></o:p></li>
+            <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+            mso-list: l1 level1 lfo6; tab-stops: list 36.0pt; text-align: justify;">The site assign the user to the
+                role
+                <o:p></o:p></li>
+        </ol>
+    <p style="text-align: justify">
+        <strong><span>To remove roles to an user account</span></strong><o:p></o:p></p>
+    <ol start="1" type="1">
+        <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+            mso-list: l0 level1 lfo7; tab-stops: list 36.0pt; text-align: justify;"><span>
+                Log in to the site with an <strong>Administrator</strong> user</span>
+            <o:p></o:p></li>
+        <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+            mso-list: l0 level1 lfo7; tab-stops: list 36.0pt; text-align: justify;"><span>
+                Click the <strong>Permissions </strong>tab </span>
+            <o:p></o:p></li>
+        <li style="margin: 0cm 0cm 0pt; text-align: justify; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-list: l0 level1 lfo7; tab-stops: list 36.0pt" class="MsoNormal"><span>Select the <strong>User Name</strong> in the <strong>User Roles </strong>area</span>
+            <o:p></o:p></li>
+        <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+            mso-list: l0 level1 lfo7; tab-stops: list 36.0pt; text-align: justify;"><span>
+                Click the<strong> Delete </strong> button next to the role name wishes in
+                the <strong>
+                    User Roles</strong> area </span>
+            <o:p></o:p></li>
+        <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+            mso-list: l0 level1 lfo7; tab-stops: list 36.0pt; text-align: justify;"><span>
+                The site assign the user to the role</span><o:p></o:p></li></ol>
+    <div align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt; text-align: center">
+        <hr align="center" size="2" width="100%" />
+    </div>
+    <h2 style="margin: auto 0cm; text-align: justify;">
+        Queries<o:p></o:p></h2>
+    <h3 style="margin: auto 0cm; text-align: justify;">
+        <span style="font-size: 12pt">
+        <span>To view all users accounts general information</span></span><o:p></o:p></h3>
+    <ol start="1" type="1">
+        <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+            mso-list: l8 level1 lfo8; tab-stops: list 36.0pt; text-align: justify;">Log in to the site with a <strong>
+                Membership</strong> or <strong>OpenId</strong> user 
+            <o:p></o:p></li>
+        <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+            mso-list: l8 level1 lfo8; tab-stops: list 36.0pt; text-align: justify;">Click the <strong>All Users </strong>
+            tab 
+            <o:p></o:p></li>
+        <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+            mso-list: l8 level1 lfo8; tab-stops: list 36.0pt; text-align: justify;">The site displays the <strong>Users
+                Information&nbsp;</strong>
+            <o:p></o:p></li>
+    </ol>
+    <h3 style="margin: auto 0cm; text-align: justify;">
+        <span style="font-size: 12pt">
+        <span>To view my account information</span></span><o:p></o:p></h3>
+    <ol start="1" type="1">
+        <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+            mso-list: l6 level1 lfo9; tab-stops: list 36.0pt; text-align: justify;">Log in to the site with a <strong>
+                Membership</strong> or <strong>OpenId</strong> user 
+            <o:p></o:p></li>
+        <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+            mso-list: l6 level1 lfo9; tab-stops: list 36.0pt; text-align: justify;">Click the <strong>Specific User </strong>
+            tab 
+            <o:p></o:p></li>
+        <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+            mso-list: l6 level1 lfo9; tab-stops: list 36.0pt; text-align: justify;">The site displays your <strong>
+                User
+                Information</strong>
+            <o:p></o:p></li>
+    </ol>
+    <div align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt; text-align: center">
+        <hr align="center" size="2" width="100%" />
+    </div>
+    <p style="text-align: justify">
+        <strong><span style="font-size: 18pt">&nbsp;Technical Notes</span></strong><o:p></o:p></p>
+    <ol start="1" type="1">
+        <li class="MsoNormal" style="margin: 0cm 0cm 0pt; text-align: justify; mso-margin-top-alt: auto;
+            mso-margin-bottom-alt: auto; mso-list: l5 level1 lfo10; tab-stops: list 36.0pt">
+            The files openid.properties and Login_OpenID.aspx must be together in the same file
+            directory to support the different kinds of OpenId providers.<o:p></o:p></li>
+        <li>
+            <p class="MsoNormal" style="margin: 0cm 0cm 0pt">
+                When you create an user account with an OpenID URL, the user name must be exactly
+                the same URL because the Site create a relationship between these entities to display
+                user information.</p>
+        </li>
+    </ol>
+    
+     <div align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt; text-align: center">
+        <hr align="center" size="2" width="100%" />
+    </div>
+    <h3 style="margin: auto 0cm; text-align: justify;">
+        <span style="background-position: 0% 0%; background-attachment: scroll;"><a name="License">License</a></span>
+        <o:p>&nbsp;(New BSD License)</o:p></h3>
+    <p>Copyright (c) 2007, StrongEye Solutions LLC<br />
+	<br />
+	All rights reserved.</p>
+	<p>Redistribution and use in source and binary forms, with or without 
+	modification, are permitted provided that the following conditions are met:</p>
+	<ul>
+		<li>Redistributions of source code must retain the above copyright 
+		notice, this list of conditions and the following disclaimer.</li>
+		<li>Redistributions in binary form must reproduce the above copyright 
+		notice, this list of conditions and the following disclaimer in the 
+		documentation and/or other materials provided with the distribution.</li>
+		<li>Neither the name StrongEye Solutions nor the names of its 
+		contributors may be used to endorse or promote products derived from 
+		this software without specific prior written permission.</li>
+	</ul>
+	<p>THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS<br />
+	&quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT<br />
+	LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR<br />
+	A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER 
+	OR<br />
+	CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,<br />
+	EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,<br />
+	PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR<br />
+	PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF<br />
+	LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING<br />
+	NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS<br />
+	SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
+    <p style="text-align: justify">
+        &nbsp;</p>
+    <p>
+
+
+</body>
+</html>

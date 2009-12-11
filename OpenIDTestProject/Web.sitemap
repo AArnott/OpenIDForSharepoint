@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
+  <siteMapNode url="~\OpenId\Pages\About.aspx" title="About"  description="About">
+        
+    <siteMapNode url="~\OpenId\Pages\Login_OpenID.aspx" title="Login"  description="Login" />
+    
+    <siteMapNode url="~\OpenId\Pages\Create_User.aspx" title="Create Users"  description="Create Users" />
+
+    <siteMapNode url="~\OpenId\Administrators\All_Users.aspx" title="All Users"  description="All Users" />
+    
+    <siteMapNode url="~\OpenId\Pages\Specific_User.aspx" title="Specific User"  description="Specific User" />
+
+    <siteMapNode url="~\OpenId\Administrators\Permissions_And_Roles.aspx" title="Permissions"  description="Permissions and Roles" />
+    <siteMapNode url="~\OpenId\Administrators\OpenId_Admin.aspx" title="OpenId Admin"  description="OpenId Administration" />
+  </siteMapNode>
+</siteMap>
