@@ -32,7 +32,6 @@ namespace OrbitOne.OpenId.MembershipProvider
         private string _nonOpenIdMembershipProviderName;
         #endregion
 
-        
         #region Properties
 
       
@@ -212,7 +211,6 @@ namespace OrbitOne.OpenId.MembershipProvider
                
         #endregion
 
-
         #region MembershipProvider Methods
 
         public override MembershipUser CreateUser(string username, string password, string email, string passwordQuestion, string passwordAnswer,
@@ -343,7 +341,6 @@ namespace OrbitOne.OpenId.MembershipProvider
             return NonOpenIdMembershiProvider.FindUsersByName(usernameToMatch, pageIndex, pageSize, out totalRecords);
         }
         #endregion MembershipProvider Methods
-
 
         #region OpenId Related
 
@@ -642,8 +639,6 @@ namespace OrbitOne.OpenId.MembershipProvider
         
         #endregion OpenId Related
 
-
-
         #region Not Suported Methods
         public override bool EnablePasswordReset
         {
@@ -764,8 +759,5 @@ namespace OrbitOne.OpenId.MembershipProvider
         }
 
         #endregion
-
-
-
     }
 }

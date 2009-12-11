@@ -1,6 +1,7 @@
 using System;
 using System.Web.Security;
 using System.Web.UI.WebControls;
+using DotNetOpenAuth.OpenId;
 using OrbitOne.OpenId.MembershipProvider;
 namespace OrbitOne.OpenId.Controls
 {
@@ -9,17 +10,14 @@ namespace OrbitOne.OpenId.Controls
         private static readonly string HEADTEXT =
             "The OpenId: <b>{0}</b> you are trying to login with is not linked with any site user, please link this OpenId with your site user account:";
 
-        private string _openId;
+        private Identifier _openId;
         private string _openIdmembershipProvider;
 
 
         protected Login LinkOpenIdLogin;
         protected Label headLabel;
         
-        
-        
-        
-        public string OpenId
+        public Identifier OpenId
         {
             get { return _openId; }
             set { _openId = value; }

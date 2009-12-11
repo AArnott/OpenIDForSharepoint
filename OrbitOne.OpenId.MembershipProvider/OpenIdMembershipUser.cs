@@ -1,23 +1,16 @@
 using System;
 using System.Web.Security;
+using DotNetOpenAuth.OpenId;
 
 namespace OrbitOne.OpenId.MembershipProvider
 {
     public class OpenIdMembershipUser : MembershipUser
     {
-
-        private string _openId;
-
-        public string OpenId
-        {
-            get { return _openId; }
-            set { _openId = value; }
-        }
-
+        public Identifier OpenId { get; set; }
 
         public OpenIdMembershipUser(
           string providerName, 
-          string openId,
+          Identifier openId,
           string name,
           object providerUserKey,
           string email,
@@ -47,7 +40,5 @@ namespace OrbitOne.OpenId.MembershipProvider
         {
             OpenId = openId;
         }
-
-
     }
 }

@@ -153,9 +153,8 @@ namespace OrbitOne.OpenId.Controls
             {
                 Page.Response.Redirect(string.Format("{0}?openId={1}", LinkOpenIdPage, HttpUtility.UrlEncode(nlEx.Message)));
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-
             }
         }
         protected override void RenderContents(HtmlTextWriter output)
