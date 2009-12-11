@@ -8,32 +8,28 @@ using System.Data.SqlClient;
 using System.Web;
 using System.Web.Security;
 using System.Web.SessionState;
-using Janrain.OpenId.Consumer;
+using DotNetOpenAuth.Messaging;
+using DotNetOpenAuth.OpenId;
+using DotNetOpenAuth.OpenId.Extensions.SimpleRegistration;
+using DotNetOpenAuth.OpenId.RelyingParty;
 
 namespace OrbitOne.OpenId.MembershipProvider
 {
     public class OpenIdMembershipProvider : System.Web.Security.MembershipProvider
     {
         #region Members
+
+        private static readonly OpenIdRelyingParty consumer = new OpenIdRelyingParty();
         
         private static readonly string EXCEPTION_MESSAGE = "An exception occurred. Please check the Event Log.";
         private string _connectionString;
         private bool _WriteExceptionsToEventLog;
         private string _applicationName;
-        private string _nickname;
-        private string _email;
-        private string _fullname;
-        private string _dayOfBirth;
-        private string _gender;
-        private string _postcode;
-        private string _country;
-        private string _language;
-        private string _timezone;
+        private ClaimsResponse _sreg;
         private string _optionalInformation;
         private string _loginURL;
         private int _minutesSinceLastActivity;
         private string _nonOpenIdMembershipProviderName;
-        private Janrain.OpenId.Session.SimpleSessionState consumerSession;
         #endregion
 
         
@@ -55,55 +51,65 @@ namespace OrbitOne.OpenId.MembershipProvider
        
         public string Nickname
         {
-            get { return _nickname; }
+            get { return _sreg != null ? _sreg.Nickname : string.Empty; }
         }
 
         
         public string Email
         {
-            get { return _email; }
+            get { return _sreg != null ? _sreg.Email : string.Empty; }
         }
 
       
         public string Fullname
         {
-            get { return _fullname; }
+            get { return _sreg != null ? _sreg.FullName : string.Empty; }
         }
 
        
         public string Dob
         {
-            get { return _dayOfBirth; }
+            get { return _sreg != null ? _sreg.BirthDateRaw : string.Empty; }
         }
 
-        
+
         public string Gender
         {
-            get { return _gender; }
+            get
+            {
+                if (_sreg != null && _sreg.Gender.HasValue)
+                {
+                    return _sreg.Gender.Value == DotNetOpenAuth.OpenId.Extensions.SimpleRegistration.Gender.Male ? "M" : "F";
+                }
+                else
+                {
+                    return string.Empty;
+                }
+            }
         }
 
        
         public string Postcode
         {
-            get { return _postcode; }
+            get { return _sreg != null ? _sreg.PostalCode : string.Empty; }
         }
 
        
         public string Country
         {
-            get { return _country; }
+            get { return _sreg != null ? _sreg.Country : string.Empty; }
         }
 
         
         public string Language
         {
-            get { return _language; }
+            get { return _sreg != null ? _sreg.Language : string.Empty; }
         }
 
         
         public string Timezone
         {
-            get { return _timezone; }
+            get { return _sreg != null ? _sreg.TimeZone : string.Empty; }
         }
 
        
@@ -200,7 +206,7 @@ namespace OrbitOne.OpenId.MembershipProvider
                     Utility.WriteToEventLog(e, "Initialize");
                 }
 
-                throw new OpenIdMembershipProviderException(e.Message, e.Source, e.StackTrace);
+                throw new OpenIdMembershipProviderException("Initialize failed.", e);
             }
         }
                
@@ -254,7 +260,7 @@ namespace OrbitOne.OpenId.MembershipProvider
                     Utility.WriteToEventLog(e, "DeleteUser");
                 }
 
-                throw new OpenIdMembershipProviderException(e.Message, e.Source, e.StackTrace);
+                throw new OpenIdMembershipProviderException("DeleteUser failed.", e);
             }
             finally
             {
@@ -291,87 +297,46 @@ namespace OrbitOne.OpenId.MembershipProvider
 
             NonOpenIdMembershiProvider.UpdateUser(user);
         }
+
         public override bool ValidateUser(string username, string password)
         {
-            bool ret = true;
-            Uri userUri = Utility.NormalizeIdentityUrl(username);
-            HttpContext Context = HttpContext.Current;
-            HttpSessionState Session = Context.Session;
-            HttpRequest Request = Context.Request;
-            HttpResponse Response = Context.Response;
-            Janrain.OpenId.Consumer.Consumer consumer;
-            try
-            {
-                if (consumerSession == null)
-                {
-                    consumerSession = new Janrain.OpenId.Session.SimpleSessionState();
-                }
-                consumer = new Janrain.OpenId.Consumer.Consumer(consumerSession,
-                                                                Janrain.OpenId.Store.MemoryStore.GetInstance());
-            }
-            catch
+            _loginURL = HttpContext.Current.Request.Url.AbsoluteUri;
+
+            if (string.IsNullOrEmpty(username))
             {
                 return false;
             }
-            if (username != null)
+
+            try
             {
-                try
+                var request = consumer.CreateRequest(username);
+                if (request == null)
                 {
-                    AuthRequest request = consumer.Begin(userUri);
-                    // Build the trust root
-                    UriBuilder builder = new UriBuilder(Request.Url.AbsoluteUri);
-                    builder.Query = null;
-                    builder.Password = null;
-                    builder.UserName = null;
-                    builder.Fragment = null;
-                    builder.Path = Request.ApplicationPath;
-                    // The following approach does not append port 80 in the
-                    // no port case.
-                    string trustRoot = (new Uri(builder.ToString())).ToString();
-                    // Build the return_to URL
-                    builder = new UriBuilder(Request.Url.AbsoluteUri);
-                    NameValueCollection col = new NameValueCollection();
-                    col["ReturnUrl"] = Request.QueryString["ReturnUrl"];
-                    builder.Query = Janrain.OpenId.UriUtil.CreateQueryString(col);
-                    Uri returnTo = new Uri(builder.ToString());
-                    Uri redirectUrl = request.CreateRedirect(trustRoot, returnTo, AuthRequest.Mode.SETUP);
-                    // The following illustrates how to use SREG. 
-                    String uriString = redirectUrl.AbsoluteUri + "&openid.sreg.optional=" + _optionalInformation;
-                    // Get the current page
-                    _loginURL = Context.Request.Url.AbsoluteUri;
-                    // Redirect the user to the OpenID provider Page
-                    Response.Redirect(uriString, true);
+                    // Not a valid OpenID.
+                    return false;
                 }
-                catch (FailureException fexc)
+
+                // The following illustrates how to use SREG.
+                // TODO: use _optionalInformation contents instead of hard-coding it.
+                request.AddExtension(new ClaimsRequest
                 {
-                    if (WriteExceptionsToEventLog)
-                    {
-                        Utility.WriteToEventLog(fexc, "ValidateOpenIDUser");
-                    }
-                    throw new OpenIdMembershipProviderException(fexc.Message, fexc.Source, fexc.StackTrace);
-                }
-                catch (System.Threading.ThreadAbortException)
-                {
-                    // Consume. This is normal during redirect.
-                }
-                catch (Exception fe)
-                {
-                    if (WriteExceptionsToEventLog)
-                    {
-                        Utility.WriteToEventLog(fe, "ValidateOpenIDUser");
-                    }
-                    throw new OpenIdMembershipProviderException(fe.Message, fe.Source, fe.StackTrace);
-                }
+                    Email = DemandLevel.Request,
+                });
+
+                // Redirect the user to the OpenID provider Page
+                request.RedirectToProvider();
+                return true; // never executed because Redirect throws an exception, but C# requires it.
             }
-            else
+            catch (ProtocolException fexc)
             {
-                ret = false;
+                if (WriteExceptionsToEventLog)
+                {
+                    Utility.WriteToEventLog(fexc, "ValidateOpenIDUser");
+                }
+
+                throw new OpenIdMembershipProviderException("ValidateUser failed.", fexc);
             }
-            return ret;
         }
-
-        
-
       
         public override MembershipUserCollection FindUsersByName(string usernameToMatch, int pageIndex, int pageSize, out int totalRecords)
         {
@@ -384,82 +349,42 @@ namespace OrbitOne.OpenId.MembershipProvider
 
         public bool ValidateOpenIDUser()
         {
-            bool ret = true;
-            HttpContext Context = HttpContext.Current;
-            HttpSessionState Session = Context.Session;
-            HttpRequest Request = Context.Request;
-            Janrain.OpenId.Consumer.Consumer consumer;
-
             try
             {
-                if (consumerSession == null)
+                var response = consumer.GetResponse();
+                if (response.Status != AuthenticationStatus.Authenticated)
                 {
-                    consumerSession = new Janrain.OpenId.Session.SimpleSessionState();
+                    return false;
                 }
-                consumer = new Janrain.OpenId.Consumer.Consumer(consumerSession,
-                                                                Janrain.OpenId.Store.MemoryStore.GetInstance());
+
+                _sreg = response.GetExtension<ClaimsResponse>();
+
+                MembershipUser user = GetUserByOpenId(response.ClaimedIdentifier, true);
+                if (user != null)
+                {
+                    FormsAuthentication.RedirectFromLoginPage(user.UserName, false);
+                    return true; // never reached, due to redirect
+                }
+                else
+                {
+                    throw new OpenIdNotLinkedException(response.ClaimedIdentifier);
+                }
             }
-            catch
+            catch (ProtocolException ex)
             {
+                if (WriteExceptionsToEventLog)
+                {
+                    Utility.WriteToEventLog(ex, "ValidateOpenIDUser");
+                }
+
                 return false;
             }
-
-            if (Request.QueryString["openid.mode"] != null && Request.QueryString["openid.mode"] != "Cancel")
+            catch (OpenIdNotLinkedException nlEx)
             {
-                try
-                {
-                    ConsumerResponse resp = consumer.Complete(Request.QueryString);
-                    string userIdentity = Utility.IdentityUrlToDisplayString(resp.IdentityUrl);
-                    _country = (Request.QueryString["openid.sreg.country"] ?? "");
-                    _dayOfBirth = (Request.QueryString["openid.sreg.dob"] ?? "");
-                    _email = (Request.QueryString["openid.sreg.email"] ?? "");
-                    _fullname = (Request.QueryString["openid.sreg.fullname"] ?? "");
-                    _gender = (Request.QueryString["openid.sreg.gender"] ?? "");
-                    _language = (Request.QueryString["openid.sreg.language"] ?? "");
-                    _nickname = (Request.QueryString["openid.sreg.nickname"] ?? "");
-                    _postcode = (Request.QueryString["openid.sreg.postcode"] ?? "");
-                    _timezone = (Request.QueryString["openid.sreg.timezone"] ?? "");
-
-
-                    MembershipUser user = GetUserByOpenId(userIdentity, true);
-                    ret = (user != null);
-                    if (ret)
-                    {
-                        FormsAuthentication.RedirectFromLoginPage(user.UserName, false);
-                    }
-                    else
-                    {
-                        OpenIdNotLinkedException exception = new OpenIdNotLinkedException(userIdentity);
-                        throw exception;
-                    }
-                }
-                catch (FailureException fexc)
-                {
-                    if (WriteExceptionsToEventLog)
-                    {
-                        Utility.WriteToEventLog(fexc, "ValidateOpenIDUser");
-                    }
-                    ret = false;
-                }
-                catch (OpenIdNotLinkedException nlEx)
-                {
-                    throw nlEx;
-                }
-                catch (Exception fe)
-                {
-                    if (WriteExceptionsToEventLog)
-                    {
-                        Utility.WriteToEventLog(fe, "ValidateOpenIDUser");
-                    }
-                    throw new OpenIdMembershipProviderException(fe.Message, fe.Source, fe.StackTrace);
-                }
+                throw nlEx;
             }
-            else
-            {
-                ret = false;
-            }
-            return ret;
         }
+
         public MembershipUser GetUserByOpenId(string openId, bool userIsOnline)
         {
 
@@ -486,7 +411,7 @@ namespace OrbitOne.OpenId.MembershipProvider
                 {
                     Utility.WriteToEventLog(e, "GetUserByOpenId ");
                 }
-                throw new OpenIdMembershipProviderException(e.Message, e.Source, e.StackTrace);
+                throw new OpenIdMembershipProviderException("GetUserByOpenId failed.", e);
             }
             finally
             {
@@ -525,7 +450,7 @@ namespace OrbitOne.OpenId.MembershipProvider
 
                     throw new ProviderException(EXCEPTION_MESSAGE);
                 }
-                throw new OpenIdMembershipProviderException(e.Message, e.Source, e.StackTrace);
+                throw new OpenIdMembershipProviderException("GetAllOpenIdUsers failed.", e);
             }
             finally
             {
@@ -538,10 +463,6 @@ namespace OrbitOne.OpenId.MembershipProvider
         }
         public void LinkUserWithOpenId(string openId, object userId)
         {
-
-            openId = Utility.NormalizeIdentityUrl(openId).ToString();
-
-
             SqlConnection conn = new SqlConnection(_connectionString);
             SqlCommand cmd = new SqlCommand("OpenId_LinkUserWithOpenId", conn);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -559,7 +480,7 @@ namespace OrbitOne.OpenId.MembershipProvider
                 {
                     Utility.WriteToEventLog(e, "LinkUserWithOpenId ");
                 }
-                throw new OpenIdMembershipProviderException(e.Message, e.Source, e.StackTrace);
+                throw new OpenIdMembershipProviderException("LinkUserWithOpenId failed.", e);
             }
             finally
             {
@@ -587,7 +508,7 @@ namespace OrbitOne.OpenId.MembershipProvider
                 {
                     Utility.WriteToEventLog(e, "LinkUserWithOpenId ");
                 }
-                throw new OpenIdMembershipProviderException(e.Message, e.Source, e.StackTrace);
+                throw new OpenIdMembershipProviderException("RemoveUserOpenIdLinkByOpenId failed.", e);
             }
             finally
             {
@@ -614,7 +535,7 @@ namespace OrbitOne.OpenId.MembershipProvider
                 {
                     Utility.WriteToEventLog(e, "LinkUserWithOpenId ");
                 }
-                throw new OpenIdMembershipProviderException(e.Message, e.Source, e.StackTrace);
+                throw new OpenIdMembershipProviderException("RemoveUserOpenIdLinkByUserId failed.", e);
             }
             finally
             {
@@ -655,7 +576,7 @@ namespace OrbitOne.OpenId.MembershipProvider
                 {
                     Utility.WriteToEventLog(e, "GetOpenIdsByUserName ");
                 }
-                throw new OpenIdMembershipProviderException(e.Message, e.Source, e.StackTrace);
+                throw new OpenIdMembershipProviderException("GetOpenIdsByUserName failed.", e);
             }
             finally
             {

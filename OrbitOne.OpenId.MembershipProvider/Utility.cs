@@ -34,42 +34,6 @@ namespace OrbitOne.OpenId.MembershipProvider
            return Guid.NewGuid().ToString();
        }
 
-
-       public static Uri NormalizeIdentityUrl(String identityUrl)
-       {
-           Uri retVal = null;
-           // To get an iname to fit onto a Uri object, we prefix
-           // with "xri:". This is because Uri object will not allow "xri://".
-           if (identityUrl.StartsWith("xri://"))
-           {
-               identityUrl = identityUrl.Substring("xri://".Length);
-               retVal = new Uri("xri:" + identityUrl);
-           }
-           else if (identityUrl.StartsWith("=") || identityUrl.StartsWith("@"))
-           {
-               retVal = new Uri("xri:" + identityUrl);
-           }
-           else if (!identityUrl.StartsWith("http://"))
-           {
-               retVal = Janrain.OpenId.UriUtil.NormalizeUri(string.Format("http://{0}/", identityUrl.Trim("/".ToCharArray())));
-
-           }
-           else
-           {
-               retVal = Janrain.OpenId.UriUtil.NormalizeUri(identityUrl);
-           }
-           return retVal;
-       }
-
-       public static String IdentityUrlToDisplayString(Uri identityUrl)
-       {
-           String absoluteUri = identityUrl.AbsoluteUri;
-           if (absoluteUri.StartsWith("xri:"))
-           {
-               absoluteUri = absoluteUri.Substring("xri:".Length);
-           }
-           return absoluteUri;
-       }
        public static byte[] HexToByte(string hexString)
        {
            byte[] returnBytes = new byte[hexString.Length / 2];
